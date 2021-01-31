@@ -1,0 +1,39 @@
+name: "Release"
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  nix-release:
+    name: 'Release Nix expression'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.3.4
+        with:
+          submodules: recursive
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v12
+
+      - name: Create release expression
+        run: |
+          nix-env -iA nix-prefetch-scripts jq
+          url="https://github.com/${{ github.repository }}"
+          rev="$GITHUB_SHA"
+          nix-prefetch-git --url "$url" --rev "$rev" --fetch-submodules > source.json
+          sha256=$(jq '.sha256' <source.json)
+          sed release.template.nix \
+            -e "s;@url@;$url;" \
+            -e "s;@rev@;$rev;" \
+            -e "s;@sha256@;$sha256;" \
+            > release.nix
+
+      - name: Upload release expression
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./release.nix
+          asset_name: release.nix
+          asset_content_type: text/plain
