@@ -19,15 +19,9 @@ jobs:
 
       - name: Create release expression
         run: |
-          nix-env -iA nix-prefetch-scripts jq
-          url="https://github.com/${{ github.repository }}"
-          rev="$GITHUB_SHA"
-          nix-prefetch-git --url "$url" --rev "$rev" --fetch-submodules > source.json
-          sha256=$(jq '.sha256' <source.json)
-          sed release.template.nix \
-            -e "s;@url@;$url;" \
-            -e "s;@rev@;$rev;" \
-            -e "s;@sha256@;$sha256;" \
+          ./release.sh \
+            "https://github.com/${{ github.repository }}" \
+            "$GITHUB_SHA" \
             > release.nix
 
       - name: Upload release expression
