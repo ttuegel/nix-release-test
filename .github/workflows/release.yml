@@ -15,4 +15,4 @@ jobs:
           submodules: recursive
 
       - name: Upload lock file
-        uses: ttuegel/upload-release.nix@c00b12b93a4c37158fcaaf2f0b7701877107c9ce
+        uses: ttuegel/upload-release.nix
