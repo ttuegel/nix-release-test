@@ -17,17 +17,6 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v12
 
-      - name: Create release.nix
+      - name: Upload release.nix
         id: create-release-nix
-        uses: ttuegel/upload-release.nix@v0.3
-
-      - name: Upload release expression
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ steps.create-release-nix.outputs.asset_path }}
-          asset_name: release.nix
-          asset_content_type: text/plain
-
+        uses: ttuegel/upload-release.nix@v0.4
