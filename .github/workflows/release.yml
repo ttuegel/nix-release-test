@@ -19,7 +19,7 @@ jobs:
 
       - name: Create release.nix
         id: create-release-nix
-        uses: ttuegel/upload-release.nix@v0.2
+        uses: ttuegel/upload-release.nix@v0.3
 
       - name: Upload release expression
         uses: actions/upload-release-asset@v1
