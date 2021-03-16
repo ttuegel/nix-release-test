@@ -19,4 +19,4 @@ jobs:
 
       - name: Upload release.nix
         id: create-release-nix
-        uses: ttuegel/upload-release.nix@v0.4
+        uses: ttuegel/upload-release.nix@v0.5
