@@ -19,4 +19,6 @@ jobs:
 
       - name: Upload release.nix
         id: create-release-nix
-        uses: ttuegel/upload-release.nix@v0.5
+        uses: ttuegel/upload-release.nix@v0.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
